@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  TITLE: "Helm Etherpad"
+  SKIN_NAME: "colibris"
+  DEFAULT_PAD_TEXT: "Welcome to Helm Etherpad"
+  TRUST_PROXY: "true"
