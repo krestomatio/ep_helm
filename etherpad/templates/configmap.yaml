@@ -3,7 +3,16 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-configmap
 data:
-  TITLE: "Helm Etherpad"
-  SKIN_NAME: "colibris"
-  DEFAULT_PAD_TEXT: "Welcome to Helm Etherpad"
-  TRUST_PROXY: "true"
+  TITLE: "{{.Values.etherpad.TITLE }}"
+  SKIN_NAME: "{{.Values.etherpad.SKIN_NAME }}"
+  DEFAULT_PAD_TEXT: "{{.Values.etherpad.DEFAULT_PAD_TEXT }}"
+  TRUST_PROXY: "{{.Values.etherpad.TRUST_PROXY }}"
+  DB_TYPE: "{{.Values.etherpad.DB_TYPE }}"  
+  {{ if ne .Values.etherpad.DB_TYPE "dirty" }}
+  DB_HOST: "{{.Values.etherpad.DB_HOST }}"
+  DB_PORT: "{{.Values.etherpad.DB_PORT }}"
+  DB_NAME: "{{.Values.etherpad.DB_NAME }}"
+  DB_USER: "{{.Values.etherpad.DB_USER }}"
+  DB_PASS: "{{.Values.etherpad.DB_PASS }}"
+  {{ end }}
+  

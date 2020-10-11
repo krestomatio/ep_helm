@@ -10,6 +10,21 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+
+etherpad:
+  DB_TYPE: "dirty"
+  DB_HOST: "db.local"
+  DB_PORT: "4321"
+  DB_NAME: "etherpad"
+  DB_USER: "dbusername"
+  DB_PASS: "mypassword"
+  TITLE: "Helm Etherpad"
+  SKIN_NAME: "colibris"
+  DEFAULT_PAD_TEXT: "Welcome to Helm Etherpad"
+  TRUST_PROXY: "true"
+
+
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
