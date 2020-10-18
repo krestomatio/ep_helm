@@ -13,7 +13,6 @@ image:
 # admin_pass: changeme-please
 # user_pass: changeme-please
 
-
 etherpad:
   TITLE: "Helm Etherpad"
   SKIN_NAME: "colibris"
@@ -99,4 +98,4 @@ affinity: {}
 postgresql:
   postgresqlDatabase: etherpad
   postgresqlPassword: changeme-please
-  useExistingSecret: etherpad-secret
+  existingSecret: etherpad-secret
