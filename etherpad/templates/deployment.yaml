@@ -35,7 +35,37 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
           - configMapRef:
-              name: {{ .Release.Name }}-configmap
+              name: etherpad-secret
+          env:
+            - name: DB_TYPE
+              value: postgrespool
+            - name: DB_HOST
+              value: {{ template "etherpad.db.fullname" . }}
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: {{ .Values.postgresql.postgresqlDatabase | quote }}
+            - name: DB_USER
+              value: {{ .Values.postgresql.postgresqlUsername | quote }}
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: etherpad-secret
+                  key: postgresql-password
+            {{- if .Values.admin_pass }}
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: etherpad-secret
+                  key: admin-password
+            {{- end }}
+            {{- if .Values.user_pass }}
+            - name: USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: etherpad-secret
+                  key: user-password
+            {{- end }}
           ports:
             - name: http
               containerPort: 9001

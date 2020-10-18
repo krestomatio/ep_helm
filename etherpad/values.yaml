@@ -10,20 +10,18 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+# admin_pass: changeme-please
+# user_pass: changeme-please
+
 
 etherpad:
-  DB_TYPE: "dirty"
-  DB_HOST: "db.local"
-  DB_PORT: "4321"
-  DB_NAME: "etherpad"
-  DB_USER: "dbusername"
-  DB_PASS: "mypassword"
   TITLE: "Helm Etherpad"
   SKIN_NAME: "colibris"
   DEFAULT_PAD_TEXT: "Welcome to Helm Etherpad"
   TRUST_PROXY: "true"
-
-
+  REQUIRE_AUTHENTICATION: false
+  REQUIRE_AUTHORIZATION: false
+  REQUIRE_SESSION: false
 
 imagePullSecrets: []
 nameOverride: ""
@@ -92,3 +90,13 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+#
+# Postgres chart configuration
+#
+# https://github.com/bitnami/charts/blob/master/bitnami/postgresql/values.yaml
+#
+postgresql:
+  postgresqlDatabase: etherpad
+  postgresqlPassword: changeme-please
+  useExistingSecret: etherpad-secret
