@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
           - configMapRef:
-              name: etherpad-secret
+              name: {{ include "etherpad.fullname" . }}
           env:
             - name: DB_TYPE
               value: postgrespool
