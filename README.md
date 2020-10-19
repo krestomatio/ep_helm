@@ -48,9 +48,8 @@ docker build --build-arg \
 docker push jobcespedes/etherpad:${image_next_tag}
 
 # test
-```
-TODO
-```
+## TODO: add tests
+
 
 # git
 git add Dockerfile README Chart.yaml
