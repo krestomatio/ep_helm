@@ -13,9 +13,9 @@ git clone --depth 1 https://github.com/krestomatio/ep_helm
 cd ep_helm
 
 # install helm chart
-admin_pass='changeme-please'
-echo "admin_pass: '${admin_pass}'" > admin_pass_value.yaml
-helm install -n etherpad -f admin_pass_value.yaml etherpad .
+adminPass='changeme-please'
+echo "adminPass: '${adminPass}'" > adminPass_value.yaml
+helm install -n etherpad -f adminPass_value.yaml etherpad .
 ```
 
 ## Image build

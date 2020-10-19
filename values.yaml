@@ -8,10 +8,10 @@ image:
   name: krestomatio/etherpad:1.8.6
   pullPolicy: IfNotPresent
 
-liveness_path: /liveness
-readiness_path: /readiness
-admin_pass: changeme-please
-# user_pass: changeme-please
+livenessPath: /liveness
+readinessPath: /readiness
+adminPass: changeme-please
+# userPass: changeme-please
 
 # Add any environment variable compatible with https://github.com/ether/etherpad-lite/blob/develop/doc/docker.md
 config_variables:
@@ -97,5 +97,4 @@ affinity: {}
 #
 postgresql:
   postgresqlDatabase: etherpad
-  postgresqlPassword: changeme-please
   existingSecret: etherpad-secret

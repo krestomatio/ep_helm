@@ -53,14 +53,14 @@ spec:
                 secretKeyRef:
                   name: etherpad-secret
                   key: postgresql-password
-            {{- if .Values.admin_pass }}
+            {{- if .Values.adminPass }}
             - name: ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: etherpad-secret
                   key: admin-password
             {{- end }}
-            {{- if .Values.user_pass }}
+            {{- if .Values.userPass }}
             - name: USER_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -73,11 +73,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: {{ default "/" .Values.liveness_path }}
+              path: {{ default "/" .Values.livenessPath }}
               port: http
           readinessProbe:
             httpGet:
-              path: {{ default "/" .Values.readiness_path }}
+              path: {{ default "/" .Values.readinessPath }}
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

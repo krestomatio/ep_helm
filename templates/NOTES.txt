@@ -3,7 +3,7 @@
 {{- range $host := .Values.ingress.hosts }}
   {{- range .paths }}
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
-  {{- if $.Values.admin_pass }}
+  {{- if $.Values.adminPass }}
 2. Mypads admin page:
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}mypads/?/admin
   {{- end }}
@@ -22,7 +22,7 @@
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "etherpad.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:9001
   echo "Visit http://127.0.0.1:8080 to use your application"
-  {{- if $.Values.admin_pass }}
+  {{- if $.Values.adminPass }}
   echo "Visit http://127.0.0.1:8080/mypads/?/admin for Mypads admin page"
   {{- end }}
 {{- end }}
