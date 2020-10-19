@@ -1,15 +1,15 @@
 # EtherPad Helm
 Helm chart to deploy [Etherpad](https://github.com/ether/etherpad-lite) into kubernetes along with Etherpad's user management plugin:  "[mypads](https://www.npmjs.com/package/ep_mypads)".
-It includes a container image based on the official one. It adds user management, Abiword for exporting pads, and several extra plugins (checkout build). In that case, one just have to change `image.name` value to `jobcespedes/etherpad:1.8.6`
+It includes a container image based on the official one. It adds user management, Abiword for exporting pads, and several extra plugins (checkout build).
 
 * Based on:
-  - https://github.com/focused-labs/charts/tree/master/focused/etherpad
   - https://github.com/Muelsy/ep_helm
+  - https://github.com/focused-labs/charts/tree/master/focused/etherpad
 
 ## Install
 ```
 # clone repo
-git clone --depth 1 https://github.com/jobcespedes/ep_helm
+git clone --depth 1 https://github.com/krestomatio/ep_helm
 cd ep_helm
 
 # install helm chart
@@ -43,9 +43,9 @@ sed -i -E "s@etherpad:([0-9]+)\.([0-9]+)\.([0-9]+)@etherpad:${image_next_tag}@" 
 # build
 docker build --build-arg \
     ETHERPAD_PLUGINS="ep_health_check ep_comments_page ep_author_neat ep_authornames ep_mypads ep_embedded_hyperlinks2 ep_font_color ep_font_family ep_font_size ep_tables4 ep_spellcheck" \
-    -t jobcespedes/etherpad:${image_next_tag} .
+    -t krestomatio/etherpad:${image_next_tag} .
 
-docker push jobcespedes/etherpad:${image_next_tag}
+docker push krestomatio/etherpad:${image_next_tag}
 
 # test
 ## TODO: add tests
