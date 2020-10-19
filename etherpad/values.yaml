@@ -5,25 +5,22 @@
 replicaCount: 1
 
 image:
-  repository: etherpad/etherpad:stable
+  name: jobcespedes/etherpad:1.8.6
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
 
+liveness_path: /liveness
+readiness_path: /readiness
+admin_pass: changeme-please
+# user_pass: changeme-please
 
-etherpad:
-  DB_TYPE: "dirty"
-  DB_HOST: "db.local"
-  DB_PORT: "4321"
-  DB_NAME: "etherpad"
-  DB_USER: "dbusername"
-  DB_PASS: "mypassword"
+# Add any environment variable compatible with https://github.com/ether/etherpad-lite/blob/develop/doc/docker.md
+config_variables:
   TITLE: "Helm Etherpad"
   SKIN_NAME: "colibris"
   DEFAULT_PAD_TEXT: "Welcome to Helm Etherpad"
-  TRUST_PROXY: "true"
-
-
+  # TRUST_PROXY: "true"
+  ABIWORD: /usr/bin/abiword
+  TIDY_HTML: /usr/bin/tidy
 
 imagePullSecrets: []
 nameOverride: ""
@@ -92,3 +89,13 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+#
+# Postgres chart configuration
+#
+# https://github.com/bitnami/charts/blob/master/bitnami/postgresql/values.yaml
+#
+postgresql:
+  postgresqlDatabase: etherpad
+  postgresqlPassword: changeme-please
+  existingSecret: etherpad-secret
