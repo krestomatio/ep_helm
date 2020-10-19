@@ -20,20 +20,16 @@ helm install -n etherpad -f admin_pass_value.yaml etherpad .
 
 ## Image build
 ```
-# variables
-## git tag
-git_next_tag=$(git semver --next-patch)
-## image tag
+# image tag
 image_next_tag=1.8.6
 
-# modify tag in dockerfile
+# modify tag in Dockerfile
 sed -i "s@^FROM etherpad.*@FROM etherpad/etherpad:${image_next_tag}@" Dockerfile
 
 # modify version and appVversion in Chart.yaml
 sed -i  \
-    -e "s@^version.*@version: ${git_next_tag}@" \
     -e "s@^appVersion.*@appVersion: ${image_next_tag}@" \
-    etherpad/Chart.yaml
+    Chart.yaml
 
 # modify README
 sed -i \
@@ -42,7 +38,7 @@ sed -i \
     README.md
 
 # modify values.yaml
-sed -i -E "s@etherpad:([0-9]+)\.([0-9]+)\.([0-9]+)@etherpad:${image_next_tag}@" etherpad/values.yaml
+sed -i -E "s@etherpad:([0-9]+)\.([0-9]+)\.([0-9]+)@etherpad:${image_next_tag}@" values.yaml
 
 # build
 docker build --build-arg \
@@ -57,8 +53,24 @@ TODO
 ```
 
 # git
-git add Dockerfile
+git add Dockerfile README Chart.yaml
 git commit -m "chore: update image tag to ${image_next_tag}"
+git push origin main
+```
+
+## Semantic version
+```
+# git tag
+git_next_tag=$(git semver --next-patch)
+
+# modify version and appVversion in Chart.yaml
+sed -i  \
+    -e "s@^version.*@version: ${git_next_tag}@" \
+    Chart.yaml
+
+# git
+git add Chart.yaml
+git commit -m "Release ${git_next_tag}"
 git tag -f ${git_next_tag}
 git push origin main --tags
 ```
