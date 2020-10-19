@@ -56,6 +56,6 @@ TODO
 # git
 git add Dockerfile
 git commit -m "chore: update image tag to ${image_next_tag}"
-git tag -fa ${git_next_tag}
+git tag -fa ${git_next_tag} -m "Release ${git_next_tag}"
 git push origin main -t
 ```
