@@ -8,11 +8,14 @@ It includes a container image based on the official one. It adds user management
 
 ## Install
 ```
-admin_pass='changeme-please'
-echo 'admin_pass: "${admin_pass}"' > admin_pass_value.yaml
-helm install -n etherpad -f admin_pass_value.yaml etherpad
+# clone repo
+git clone --depth 1 https://github.com/jobcespedes/ep_helm
+cd ep_helm
 
-@vault-instance?ref=0.1.1
+# install helm chart
+admin_pass='changeme-please'
+echo "admin_pass: '${admin_pass}'" > admin_pass_value.yaml
+helm install -n etherpad -f admin_pass_value.yaml etherpad .
 ```
 
 ## Image build
