@@ -48,23 +48,25 @@ spec:
               value: {{ .Values.postgresql.postgresqlDatabase | quote }}
             - name: DB_USER
               value: {{ .Values.postgresql.postgresqlUsername | quote }}
+            {{- if .Values.addDbPass }}
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: etherpad-secret
+                  name: {{ .Values.existingSecretName | default "etherpad-secret" .Values.secretName }}
                   key: postgresql-password
-            {{- if .Values.adminPass }}
+            {{- end }}
+            {{- if .Values.addAdminPass }}
             - name: ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: etherpad-secret
+                  name: {{ .Values.existingSecretName | default "etherpad-secret" .Values.secretName }}
                   key: admin-password
             {{- end }}
-            {{- if .Values.userPass }}
+            {{- if .Values.addUserPass }}
             - name: USER_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: etherpad-secret
+                  name: {{ .Values.existingSecretName | default "etherpad-secret" .Values.secretName }}
                   key: user-password
             {{- end }}
           ports:

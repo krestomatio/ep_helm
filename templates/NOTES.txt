@@ -1,10 +1,10 @@
-1. Get the application URL by running these commands:
+# Get the application URL by running these commands:
 {{- if .Values.ingress.enabled }}
 {{- range $host := .Values.ingress.hosts }}
   {{- range .paths }}
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
   {{- if $.Values.adminPass }}
-2. Mypads admin page:
+# Mypads admin page:
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}mypads/?/admin
   {{- end }}
   {{- end }}
@@ -12,17 +12,24 @@
 {{- else if contains "NodePort" .Values.service.type }}
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "etherpad.fullname" . }})
   export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-  echo http://$NODE_IP:$NODE_PORT
+# Visit http://$NODE_IP:$NODE_PORT
 {{- else if contains "LoadBalancer" .Values.service.type }}
      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
            You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "etherpad.fullname" . }}'
   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "etherpad.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
-  echo http://$SERVICE_IP:{{ .Values.service.port }}
+# Visit http://$SERVICE_IP:{{ .Values.service.port }}
 {{- else if contains "ClusterIP" .Values.service.type }}
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "etherpad.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+# Create a port forward:
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:9001
-  echo "Visit http://127.0.0.1:8080 to use your application"
+# Visit http://127.0.0.1:8080 to use your application
   {{- if $.Values.adminPass }}
-  echo "Visit http://127.0.0.1:8080/mypads/?/admin for Mypads admin page"
+# Visit http://127.0.0.1:8080/mypads/?/admin for Mypads admin page
   {{- end }}
+{{- end }}
+{{- if $.Values.addAdminPass }}
+# The admin password is '{{ include "adminPass" . }}'
+{{- end }}
+{{- if $.Values.addUserPass }}
+# The user password is '{{ include "userPass" . }}'
 {{- end }}

@@ -10,8 +10,9 @@ image:
 
 livenessPath: /liveness
 readinessPath: /readiness
-adminPass: changeme-please
-# userPass: changeme-please
+addAdminPass: true
+addDbPass: true
+addUserPass: false
 
 # Add any environment variable compatible with https://github.com/ether/etherpad-lite/blob/develop/doc/docker.md
 config_variables:

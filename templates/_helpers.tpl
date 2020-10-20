@@ -69,5 +69,50 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{/*
+Admin password
+*/}}
+{{- define "adminPass" -}}
+{{- $adminPass := default (randAlpha 16) }}
+{{- if default true .Values.checkIfSecretExists }}
+  {{- $secret := (lookup "v1" "Secret" .Release.Namespace (.Values.secretName | default "etherpad-secret")) }}
+  {{- if $secret }}
+    {{- if index $secret.data "admin-password" }}
+      {{- $adminPass = index $secret.data "admin-password" | b64dec }}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- default $adminPass .Values.adminPass  }}
+{{- end }}
 
-.Values.config.vcenter | default .Values.global.config.vcenter
+{{/*
+User password
+*/}}
+{{- define "userPass" -}}
+{{- $userPass := default (randAlpha 16) }}
+{{- if default true .Values.checkIfSecretExists }}
+  {{- $secret := (lookup "v1" "Secret" .Release.Namespace (.Values.secretName | default "etherpad-secret")) }}
+  {{- if $secret }}
+    {{- if index $secret.data "user-password" }}
+      {{- $userPass = index $secret.data "user-password" | b64dec }}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- default $userPass .Values.userPass  }}
+{{- end -}}
+
+{{/*
+DB password
+*/}}
+{{- define "dbPass" -}}
+{{- $dbPass := default (randAlpha 16) }}
+{{- if default true .Values.checkIfSecretExists }}
+  {{- $secret := (lookup "v1" "Secret" .Release.Namespace (.Values.secretName | default "etherpad-secret")) }}
+  {{- if $secret }}
+    {{- if index $secret.data "postgresql-password" }}
+      {{- $dbPass = index $secret.data "postgresql-password" | b64dec }}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- default $dbPass .Values.dbPass  }}
+{{- end -}}

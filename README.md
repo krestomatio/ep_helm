@@ -6,6 +6,9 @@ It includes a container image based on the official one. It adds user management
   - https://github.com/Muelsy/ep_helm
   - https://github.com/focused-labs/charts/tree/master/focused/etherpad
 
+## Requirements
+* Helm 3
+
 ## Install
 ```
 # clone repo
@@ -13,9 +16,7 @@ git clone --depth 1 https://github.com/krestomatio/ep_helm
 cd ep_helm
 
 # install helm chart
-adminPass='changeme-please'
-echo "adminPass: '${adminPass}'" > adminPass_value.yaml
-helm install -n etherpad -f adminPass_value.yaml etherpad .
+helm install -n etherpad --create-namespace etherpad .
 ```
 
 ## Image build
