@@ -11,11 +11,14 @@ It includes a container image based on the official one. It adds user management
 
 ## Install
 ```
-# clone repo
+# install with helm-git
+helm install -n etherpad --create-namespace -g etherpad --repo "git+https://github.com/krestomatio/ep_helm@?ref=main&sparse=1"
+
+# OR
+
+# install cloning repo
 git clone --depth 1 https://github.com/krestomatio/ep_helm
 cd ep_helm
-
-# install helm chart
 helm install -n etherpad --create-namespace etherpad .
 ```
 
